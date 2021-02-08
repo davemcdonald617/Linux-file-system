@@ -1,0 +1,7 @@
+﻿  functions.c
+C:\Users\david\source\repos\Linux file system\Linux file system\functions.c(317,22): warning C4047: 'function': 'char *' differs in levels of indirection from 'char'
+C:\Users\david\source\repos\Linux file system\Linux file system\functions.c(317,17): warning C4024: 'strcat': different types for formal and actual parameter 1
+C:\Users\david\source\repos\Linux file system\Linux file system\functions.c(323,26): warning C4047: 'function': 'const char *' differs in levels of indirection from 'const char'
+C:\Users\david\source\repos\Linux file system\Linux file system\functions.c(323,21): warning C4024: 'strtok': different types for formal and actual parameter 2
+C:\Users\david\source\repos\Linux file system\Linux file system\functions.c(311,1): warning C4047: 'initializing': 'const char' differs in levels of indirection from 'char [2]'
+  Linux file system.vcxproj -> C:\Users\david\source\repos\Linux file system\Debug\Linux file system.exe

@@ -1,107 +1,23 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include "functions.h"
 
-// Global vars
-typedef struct node {
-	char name[64];// key
-	char nodeType; // D for directory, F for file.
-	struct node* childPtr, * siblingPtr, * parentPtr;
-}NODE;
+//// Global vars
+//typedef struct node {
+//	char name[64];// key
+//	char nodeType; // D for directory, F for file.
+//	struct node* childPtr, * siblingPtr, * parentPtr;
+//}NODE;
 
 // Possible commands given by user.
 char* cmd[] = { "mkdir", "rmdir", "ls", "cd", "pwd", "creat", "rm",
 "reload", "save", "menu", "quit", NULL };
 
 NODE* root, * cwd; // root and CWD pointers
-char line[128]; // user input command line
-char command[16], pathname[64]; // command and pathname strings
+//char line[128]; // user input command line
+//char command[16], pathname[64]; // command and pathname strings
 char dname[64], bname[64]; // dirname and basename string holders
-
-// Function declarations
-//struct node initialize();
-char* dirname(char *pathname);
-char* basename(char* pathname);
-void dbname(char *pathname);
-void initialize();
-int findCmd(char *command);
-int mkdir(char *pathname); // or return int??
-int rmdir(char *pathname);
-void cd(char *pathname);
-int ls(/*char *pathname*/);
-void pwd();
-int creat(char *pathname);
-int rm(char *filename);
-void save(char *filename);
-void reload(char *filename);
-void menu();
-void quit();
-
-// Helper functions
-NODE* search(NODE* fileSys, char* pathName);
-//void add(NODE* cwd);
-void show(NODE* fileSys);
-
-int main() {
-	int index;
-
-	// Call to initialize root node.
-	initialize();
-
-	// Testing
-	//printf("root->siblingPtr->name: %s\n\n" ,root->siblingPtr->name);
-
-	while (1) {
-		// Testing
-		/*printf("Testing show(root) at beginning of while loop: ");
-		show(root);
-		printf("root->childPtr->name: %s\n\n", root->childPtr->name);
-		printf("root->name: %s\n\n", root->name);*/
-		
-		//Prompt user
-		printf("Input a command: ");
-
-		fgets(line, 128, stdin); // get at most 128 chars from stdin
-		line[strlen(line) - 1] = 0; // kill \n at end of line
-
-		// Had to add CRT_SECURE_NO_WARNINGS in preprocessor definitions
-		sscanf(line, "%s %s", command, pathname);
-
-		// Testing
-		/*printf("command = %s \n", command);
-		printf("pathname = %s \n", pathname);*/
-		//printf("%c \n", pathname[0]);
-
-		// Testing
-		/*dbname(pathname);
-		printf("dname = %s \n", dname);
-		printf("bname = %s \n", bname);
-		printf("Testing show() : ");
-		show(root);
-
-		printf("cwd->name = %s \n", cwd->name);*/
-		
-		index = findCmd(command);
-		switch (index) {
-		case 0: mkdir(pathname); break;
-		case 1: rmdir(pathname); break;
-		case 2: ls(pathname); break;
-		case 3: cd(pathname); break;
-		case 4: pwd(); break;
-		case 5: creat(pathname); break;
-		case 6: rm(pathname); break;
-		case 7: reload("filename"); break;
-		case 8: save(pathname); break;
-		case 9: menu(); break;
-		case 10: quit(); break;
-		default: printf("invalid command % s \n", command);
-		}
-		
-		printf("\n");
-	}
-
-	return 0;
-}
 
 char* dirname(char* pathname)
 {
@@ -213,19 +129,19 @@ void initialize() {
 	root->parentPtr = root; // No parent, pts to itself
 	root->siblingPtr = root; // No siblings, pts to itself
 	root->childPtr = NULL;
-	strcpy_s(root->name, sizeof (root->name), "Root");
+	strcpy_s(root->name, sizeof(root->name), "Root");
 	root->nodeType = 'D';
 
 	// don't have to return because cwd is a global
 	// initialize cwd node.
 	cwd = (NODE*)malloc(sizeof(NODE));
 	cwd = root; // At initialization, cwd is root.
-	
+
 	// Testing
 	/*printf("Inside initialize() \n");
 	printf("root->name: %s \n", root->name);
 	printf("root->siblingPtr->name: %s \n", root->siblingPtr->name);
-	
+
 	printf("Leaving initialize() \n");*/
 }
 
@@ -254,7 +170,7 @@ NODE* search(NODE* fileSys, char* dirName)
 
 	NODE* traverseP = cwd;
 
-	if (dirName[0] == '/'){
+	if (dirName[0] == '/') {
 		traverseP = root;
 	}
 	else {
@@ -279,10 +195,10 @@ NODE* search(NODE* fileSys, char* dirName)
 	return traverseP;
 }
 
-int mkdir(char *pathname)
+int mkdir(char* pathname)
 {
 	// Check for NULL
-	if (pathname == NULL){
+	if (pathname == NULL) {
 		printf("invalid pathname.");
 		return 0;
 	}
@@ -293,7 +209,7 @@ int mkdir(char *pathname)
 	newNode->parentPtr = newNode->siblingPtr = newNode->childPtr = NULL; // No siblings, or children on initialization.
 	strcpy_s(newNode->name, sizeof(newNode->name), bname);
 	newNode->nodeType = 'D';
-	
+
 	// searh for dirname node
 	NODE* tempNode = search(root, dname);
 	// check file/dir type here???
@@ -319,11 +235,11 @@ int mkdir(char *pathname)
 		temp->siblingPtr = newNode;
 		newNode->parentPtr = temp;
 	}
-	
-		return 1;
+
+	return 1;
 }
 
-int rmdir(char *pathname){
+int rmdir(char* pathname) {
 	// Check for NULL
 	if (pathname == NULL) {
 		printf("invalid pathname.");
@@ -341,14 +257,14 @@ int rmdir(char *pathname){
 	tempNode = tempNode->parentPtr;
 	if (tempNode->name == root->name) {
 		printf("Cannot remove root.");
-			return 0;
+		return 0;
 	}
 	else {
 		tempNode->childPtr = NULL;
 	}
 	return 1;
 }
-void cd(char *pathname)
+void cd(char* pathname)
 {
 	//doesn't return anything, changes global cwd.
 	// Check for NULL
@@ -359,9 +275,9 @@ void cd(char *pathname)
 	}
 	// Split pathname into dirname and basename
 	dbname(pathname);
-	
+
 	// searh for dirname node
-	NODE *tempDir = search(root, dname); 
+	NODE* tempDir = search(root, dname);
 	//check file/dir type
 	// check for errors here.
 	printf("\nTesting, in cd. tempDir->name: %s, tempdir->nodeType: %c", tempDir->name, tempDir->nodeType);
@@ -369,7 +285,7 @@ void cd(char *pathname)
 		cwd = tempDir;
 }
 int ls()
-  {
+{
 	NODE* tempDir = cwd;
 	if (tempDir->nodeType == 'D') {
 		NODE* temp2 = tempDir->childPtr;
@@ -392,23 +308,37 @@ void pwd()
 	// save name of the current Node
 	char* path = cwd->name;
 	char token = '\\';
-
+	const char limit = " ";
+	char* str;
+	//change to if?
 	while (cwd->name != root->name)
 	{
+		//first add the slash
+		path = strcat(token, path);
 		path = strcat(cwd->parentPtr->name, path);
+		
 		cwd = cwd->parentPtr;
 	}
 	
-	for(int i = 0; i < strlen(path); i++)
-	{
-	printf("%c%c ", path[i], token);
+	str = strtok(path, limit);
+	while (str) {
+		printf("%s", str);
 	}
+
+	//for (int i = 0; i < strlen(path); i++)
+	//{
+	//	//printf("%c%c ", path[i], token);
+	//	printf("%s%c ", cwd->name, token);
+	//}
+
+	//printf("%s, %c", path, token);
+
 
 	// Need to reset cwd
 	cwd = search(root, path);
 	printf("Testing, inside pwd, cwd = %s \n", cwd->name);
 }
-int creat(char *pathname)
+int creat(char* pathname)
 {
 	// Check for NULL
 	if (pathname == NULL) {
@@ -443,16 +373,16 @@ int creat(char *pathname)
 
 	return 1;
 }
-int rm(char *filename)
+int rm(char* filename)
 {
 	// Check for NULL
-	if (pathname == NULL) {
+	if (filename == NULL) {
 		printf("invalid pathname.");
 		return 0;
 	}
 
 	// Split pathname into dirname and basename
-	dbname(pathname);
+	dbname(filename);
 
 	// searh for dirname node
 	NODE* tempNode = search(root, dname);
@@ -470,45 +400,45 @@ int rm(char *filename)
 }
 
 // need filename as arg to save?
-void save(char *fileName)
+void save(char* fileName)
 {
 	NODE* tempNode = root->childPtr; // can omit root from file
 	FILE* fp = fopen("/tmp/test.txt", "w+"); // fopen a FILE stream for WRITE
-	
-	while(tempNode->childPtr)
+
+	while (tempNode->childPtr)
 	{
 		fprintf(fp, "%c %s", tempNode->nodeType, tempNode->name); // print a line to file
 
 		if (tempNode->childPtr)
 		{
-			fprintf(fp, "%c %s", tempNode->nodeType, tempNode->name); 
+			fprintf(fp, "%c %s", tempNode->nodeType, tempNode->name);
 			fprintf(fp, "%c %s", tempNode->childPtr->nodeType, tempNode->childPtr->name);
 		}
 		if (tempNode->siblingPtr)
 		{
-			fprintf(fp, "%c %s", tempNode->nodeType, tempNode->name); 
+			fprintf(fp, "%c %s", tempNode->nodeType, tempNode->name);
 			fprintf(fp, "%c %s", tempNode->siblingPtr->nodeType, tempNode->siblingPtr->name);
 		}
 
-	// Now we advance the tempNode
+		// Now we advance the tempNode
 		tempNode = tempNode->childPtr;
 	}
 	fclose(fp); // close FILE stream when done
 }
 // need filename as arg to read?
-void reload(char *fileName)
+void reload(char* fileName)
 {
 	// check for null file
 	char type[64];
 	//char name[64];
-	char *name = "";
+	char* name = "";
 
 
 	initialize();
 	FILE* fp = fopen("/tmp/test.txt", "r+"); // fopen a FILE stream for READ
 	while (!feof(fp))
 	{
-		fscanf(fp,"%s %s", type, name);
+		fscanf(fp, "%s %s", type, name);
 		if (type == "D")
 		{
 			mkdir(name);
@@ -561,4 +491,3 @@ void show(NODE* fileSys)
 }
 
 ;
-

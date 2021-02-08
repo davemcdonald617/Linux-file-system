@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Linux file system", "Linux file system\Linux file system.vcxproj", "{F684043D-952D-4A67-A2A5-B0FB44F50314}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F684043D-952D-4A67-A2A5-B0FB44F50314}.Debug|x64.ActiveCfg = Debug|x64
+		{F684043D-952D-4A67-A2A5-B0FB44F50314}.Debug|x64.Build.0 = Debug|x64
+		{F684043D-952D-4A67-A2A5-B0FB44F50314}.Debug|x86.ActiveCfg = Debug|Win32
+		{F684043D-952D-4A67-A2A5-B0FB44F50314}.Debug|x86.Build.0 = Debug|Win32
+		{F684043D-952D-4A67-A2A5-B0FB44F50314}.Release|x64.ActiveCfg = Release|x64
+		{F684043D-952D-4A67-A2A5-B0FB44F50314}.Release|x64.Build.0 = Release|x64
+		{F684043D-952D-4A67-A2A5-B0FB44F50314}.Release|x86.ActiveCfg = Release|Win32
+		{F684043D-952D-4A67-A2A5-B0FB44F50314}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D266E51-EA7C-477E-8F06-E69F36CDB4E9}
+	EndGlobalSection
+EndGlobal
